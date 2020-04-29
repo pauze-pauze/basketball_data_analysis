@@ -9,25 +9,22 @@
 
 library(shiny)
 
-# Define UI for application that draws a histogram
-shinyUI(fluidPage(
-  
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-  
-  # Sidebar with a slider input for number of bins 
-  sidebarLayout(
-    sidebarPanel(
-       sliderInput("bins",
-                   "Number of bins:",
-                   min = 1,
-                   max = 50,
-                   value = 30)
-    ),
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-       plotOutput("distPlot")
-    )
-  )
-))
+shinyUI(
+  navbarPage("NBAとユーロリーグのスタッツ比較"
+             ,tabPanel("本サイトの概要"
+                       ,h1("本サイトの概要"))
+             ,tabPanel("スタッツ比較"
+                       ,h1("スタッツ比較"))
+             ,tabPanel("スタッツのヒストグラム"
+                       ,h1("スタッツのヒストグラム"))
+             ,tabPanel("スタッツの散布図"
+                       ,h1("スタッツの散布図"))
+             ,navbarMenu("その他"
+                         ,tabPanel("自己紹介"
+                                   ,h1("自己紹介"))
+                         ,tabPanel("ソースコード"
+                                   ,p("本サイトのソースコードは下記です")
+                                   ,a(href = "https://github.com/pauze-pauze/basketball_data_analysis/tree/master/shiny_comparison_euroleague_NBA", "ソースコードへのリンク"))
+                         )
+             )
+)
