@@ -12,7 +12,17 @@ library(shiny)
 shinyUI(
   navbarPage("NBAとユーロリーグのスタッツ比較"
              ,tabPanel("本サイトの概要"
-                       ,h1("本サイトの概要"))
+                       ,h1("本サイトの概要")
+                       ,p("本サイトはユーロリーグとNBAのスタッツをインタラクティブに比較するためのサイトです"
+                          ,br()
+                          ,"「スタッツ比較」というタブでは、シーズンごとのBoxscoreをEuroleagueとNBAで比較できるようになっています"
+                          ,br()
+                          ,"「スタッツのヒストグラム」及び「スタッツの散布図」については、見たいスタッツを選択してグラフ化することができます"
+                          ,br()
+                          ,"本サイトの作成者の情報やソースコードについては「その他」タブをご参照ください"
+                          ,"※数値の正確性や妥当性については保証しません。"
+                          ,"データは下記論文内のものを利用しています")
+                       ,a(href = "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0223524", "Trends in NBA and Euroleague basketball: Analysis and comparison of statistical data from 2000 to 2017"))
              ,tabPanel("スタッツ比較"
                        ,h1("スタッツ比較")
                        ,sidebarLayout(
@@ -48,6 +58,7 @@ shinyUI(
                            tableOutput("stats_comparison_all_table")
                            ,p("※NBAのスタッツは40分換算")
                            ,p("※元データの都合で延長の考慮はしていません。")
+                           ,p("※スタッツの定義はNBAとEuroleagueで異なる点があるので、予めご了承ください。")
                          ) 
                         )
                        )
@@ -57,7 +68,18 @@ shinyUI(
                        ,h1("スタッツの散布図"))
              ,navbarMenu("その他"
                          ,tabPanel("自己紹介"
-                                   ,h1("自己紹介"))
+                                   ,h1("自己紹介")
+                                   ,p("「バスケのデータ分析」というアカウント名で活動しています"
+                                      ,br()
+                                      ,"BリーグやNBAのデータを利用したスタッツ分析や可視化、その他バスケのデータ分析に関する文献の紹介などをしています。"
+                                      ,br()
+                                      ,"分析テーマや、こういう仕事一緒にやってみませんかなどなど募集してます！"
+                                      ,br()
+                                      ,"ご連絡などは下記アカウントまでお願いいいたします！")
+                                   ,a(href = "https://twitter.com/b__s__k__t", "Twitterアカウント")
+                                   ,br()
+                                   ,a(href = "https://note.com/b__s__k__t", "ウェブサイト(note)")
+                                   )
                          ,tabPanel("ソースコード"
                                    ,p("本サイトのソースコードは下記です")
                                    ,a(href = "https://github.com/pauze-pauze/basketball_data_analysis/tree/master/shiny_comparison_euroleague_NBA", "ソースコードへのリンク"))
