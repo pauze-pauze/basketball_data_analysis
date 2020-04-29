@@ -19,7 +19,7 @@ data <- readRDS("S1_Data.rds")
 shinyServer(function(input, output) {
 
   #スタッツ比較のテーブル作成
-  data_for_stats_comparison_all <- reactive({
+  data_for_stats_comparison_all <- eventReactive(input$do,{
     data %>%
     filter(Season == input$stats_comparison_all) %>%
     group_by(League) %>%

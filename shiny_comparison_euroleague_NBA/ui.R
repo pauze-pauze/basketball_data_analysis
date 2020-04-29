@@ -27,6 +27,7 @@ shinyUI(
                              #,selected = 
                              #,multiple = 
                            )
+                           ,actionButton("do", "このシーズンを見る")
                          )
                          ,mainPanel = tableOutput("stats_comparison_all_table")
                         )
