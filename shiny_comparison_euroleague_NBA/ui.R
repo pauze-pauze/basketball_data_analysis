@@ -14,7 +14,23 @@ shinyUI(
              ,tabPanel("本サイトの概要"
                        ,h1("本サイトの概要"))
              ,tabPanel("スタッツ比較"
-                       ,h1("スタッツ比較"))
+                       ,h1("スタッツ比較")
+                       ,sidebarLayout(
+                         sidebarPanel(
+                           selectInput(
+                             inputId = "stats_comparison_all"
+                             ,label = h3("シーズンを選択してください")
+                             ,choices = list(
+                               "2000-01" = "2000-01"
+                               ,"2016-17" = "2016-17"
+                             )
+                             #,selected = 
+                             #,multiple = 
+                           )
+                         )
+                         ,mainPanel = tableOutput("stats_comparison_all_table")
+                        )
+                       )
              ,tabPanel("スタッツのヒストグラム"
                        ,h1("スタッツのヒストグラム"))
              ,tabPanel("スタッツの散布図"
