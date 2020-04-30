@@ -21,6 +21,7 @@ shinyUI(
                           ,br()
                           ,"本サイトの作成者の情報やソースコードについては「その他」タブをご参照ください"
                           ,"※数値の正確性や妥当性については保証しません。"
+                          ,br()
                           ,"データは下記論文内のものを利用しています")
                        ,a(href = "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0223524", "Trends in NBA and Euroleague basketball: Analysis and comparison of statistical data from 2000 to 2017"))
              ,tabPanel("スタッツ比較"
@@ -52,18 +53,87 @@ shinyUI(
                              #,selected = 
                              #,multiple = 
                            )
-                           ,actionButton("do", "このシーズンを見る")
+                           ,actionButton("do_table", "このシーズンを見る")
                          )
                          ,mainPanel(
                            tableOutput("stats_comparison_all_table")
                            ,p("※NBAのスタッツは40分換算")
                            ,p("※元データの都合で延長の考慮はしていません。")
-                           ,p("※スタッツの定義はNBAとEuroleagueで異なる点があるので、予めご了承ください。")
+                           ,p("※スタッツの定義はNBAとEuroleagueで異なる点があるので、予めご了承ください。") 
                          ) 
                         )
                        )
              ,tabPanel("スタッツのヒストグラム"
-                       ,h1("スタッツのヒストグラム"))
+                       ,h1("スタッツのヒストグラム")
+                       ,sidebarLayout(
+                         sidebarPanel(
+                           selectInput(
+                             inputId = "stats_hist_season"
+                             ,label = h3("シーズンを選択してください")
+                             ,choices = list(
+                               "2000-01" = "2000-01"
+                               ,"2001-02" = "2001-02"
+                               ,"2002-03" = "2002-03"
+                               ,"2003-04" = "2003-04"
+                               ,"2004-05" = "2004-05"
+                               ,"2005-06" = "2005-06"
+                               ,"2006-07" = "2006-07"
+                               ,"2007-08" = "2007-08"
+                               ,"2008-09" = "2008-09"
+                               ,"2009-10" = "2009-10"
+                               ,"2010-11" = "2010-11"
+                               ,"2011-12" = "2011-12"
+                               ,"2012-13" = "2012-13"
+                               ,"2013-14" = "2013-14"
+                               ,"2014-15" = "2014-15"
+                               ,"2015-16" = "2015-16"
+                               ,"2016-17" = "2016-17"
+                             )
+                          )
+                          ,selectInput(
+                            inputId = "stats_hist_category"
+                            ,label = h3("見たいスタッツを選択してください")
+                            ,choices = list(
+                              "FGA" = "Tot.FGA"
+                              ,"FGM" = "Tot.FGM"
+                              ,"P2A" = "Tot.P2A"
+                              ,"P2M" = "Tot.P2M"
+                              ,"P3A" = "Tot.P3A"
+                              ,"P3M" = "Tot.P3M"
+                              ,"FTA" = "Tot.FTA"
+                              ,"FTM" = "Tot.FTM"
+                              ,"TR" = "Tot.TR"
+                              ,"OR" = "Tot.OR"
+                              ,"DR" = "Tot.DR"
+                              ,"AS" = "Tot.AS"
+                              ,"TO" = "Tot.TO"
+                              ,"BLK" = "Tot.BLK"
+                            )
+                            ,selected = "FGA"
+                          )
+                          ,sliderInput(
+                            "bins"
+                            ,"ビンの数を選択してください"
+                            ,min = 1
+                            ,max = 100
+                            ,value = 30
+                          )
+                          ,actionButton("do_hist_cnt", "上記の条件で出力する")
+                         )
+                         ,mainPanel(
+                           tabsetPanel(
+                             type = "tabs"
+                             ,tabPanel(
+                               "件数の分布"
+                               ,plotOutput("stats_hist_cnt")
+                             )
+                             ,tabPanel(
+                               "件数の密度分布"
+                               ,plotOutput("stats_hist_ratio")
+                             )
+                           )
+                         )
+                       ))
              ,tabPanel("スタッツの散布図"
                        ,h1("スタッツの散布図"))
              ,navbarMenu("その他"

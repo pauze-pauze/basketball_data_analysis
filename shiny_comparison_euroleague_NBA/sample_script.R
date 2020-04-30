@@ -1,6 +1,9 @@
 # sample script
 
+data <- readRDS("S1_Data.rds")
 
+library(tidyverse)
+library(data.table)
 # スタッツ比較 ------------------------------------------------------------------
 
 data %>%

@@ -13,13 +13,14 @@ library(data.table)
 options(digits = 1)
 
 data <- readRDS("S1_Data.rds")
+  
 
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
   #スタッツ比較のテーブル作成
-  data_for_stats_comparison_all <- eventReactive(input$do,{
+  data_for_stats_comparison_all <- eventReactive(input$do_table,{
     data %>%
     filter(Season == input$stats_comparison_all) %>%
     group_by(League) %>%
@@ -76,7 +77,56 @@ shinyServer(function(input, output) {
   output$stats_comparison_all_table <- renderTable({
     data_for_stats_comparison_all()
   })
+  #ヒストグラムの件数ver出力
+  data_for_stats_hist_cnt <- eventReactive(input$do_hist_cnt,{
+    data %>%
+      filter(Season == input$stats_hist_season) %>% #シーズン選択
+      mutate(
+        Tot.FGA = Tot.P2A + Tot.P3A
+        ,Tot.FGM = Tot.P2M + Tot.P3M
+      ) %>%
+      pivot_longer(
+        col = -c(1:7)
+        ,names_to = "category"
+        ,values_to = "stats"
+      ) %>%
+      mutate(stats = if_else(League == "NBA", stats * 40 / 48, stats)) %>%
+      pivot_wider(
+        names_from = "category"
+        ,values_from = "stats"
+      ) %>%
+      ggplot(aes_(x = as.name(input$stats_hist_category), fill = as.name("League")))+
+      geom_histogram(position = "identity", alpha = 0.5, bins = input$bins + 1)+
+      theme_bw()
+  })
+  output$stats_hist_cnt <- renderPlot({
+    data_for_stats_hist_cnt()
+  })
   
-  
+  #ヒストグラムの構成比ver出力
+  data_for_stats_hist_ratio <- eventReactive(input$do_hist_cnt,{
+    data %>%
+      filter(Season == input$stats_hist_season) %>% #シーズン選択
+      mutate(
+        Tot.FGA = Tot.P2A + Tot.P3A
+        ,Tot.FGM = Tot.P2M + Tot.P3M
+      ) %>%
+      pivot_longer(
+        col = -c(1:7)
+        ,names_to = "category"
+        ,values_to = "stats"
+      ) %>%
+      mutate(stats = if_else(League == "NBA", stats * 40 / 48, stats)) %>%
+      pivot_wider(
+        names_from = "category"
+        ,values_from = "stats"
+      ) %>%
+      ggplot(aes_(x = as.name(input$stats_hist_category), fill = as.name("League")))+
+      geom_histogram(stat = "density", position = "identity", alpha = 0.5)+
+      theme_bw()
+  })
+  output$stats_hist_ratio <- renderPlot({
+    data_for_stats_hist_ratio()
+  })
   
 })
