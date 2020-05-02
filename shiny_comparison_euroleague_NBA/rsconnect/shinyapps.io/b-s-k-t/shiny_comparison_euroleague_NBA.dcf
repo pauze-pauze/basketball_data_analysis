@@ -5,8 +5,8 @@ account: b-s-k-t
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2208069
-bundleId: 3086229
+bundleId: 3092883
 url: https://b-s-k-t.shinyapps.io/shiny_comparison_euroleague_NBA/
-when: 1588257912.83278
+when: 1588398433.96716
 asMultiple: FALSE
 asStatic: FALSE

@@ -7,9 +7,7 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
-library(tidyverse)
-library(data.table)
+source("library.R")
 options(digits = 1)
 
 data <- readRDS("S1_Data.rds")

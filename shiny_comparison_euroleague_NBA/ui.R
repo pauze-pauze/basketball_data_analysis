@@ -7,12 +7,11 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
-library(shinythemes)
+source("library.R")
 
 shinyUI(
   navbarPage("NBAとユーロリーグのスタッツ比較"
-             ,theme = shinytheme("paper")
+             ,theme = shinythemes::shinytheme("paper")
              ,tabPanel("本サイトの概要"
                        ,h3("本サイトの概要")
                        ,br()
