@@ -95,7 +95,7 @@ shinyServer(function(input, output) {
       ) %>%
       ggplot(aes_(x = as.name(input$stats_hist_category), fill = as.name("League")))+
       geom_histogram(position = "identity", alpha = 0.5, bins = input$bins + 1)+
-      labs(x = str_sub(input$stats_hist_category, start = 5), y = "試合数")+
+      labs(x = str_sub(input$stats_hist_category, start = 5), y = "Count", title = input$stats_hist_season)+
       scale_fill_brewer(palette = "Set1")+
       theme_classic()
   })
@@ -123,7 +123,7 @@ shinyServer(function(input, output) {
       ) %>%
       ggplot(aes_(x = as.name(input$stats_hist_category), fill = as.name("League")))+
       geom_histogram(stat = "density", position = "identity", alpha = 0.5)+
-      labs(x = str_sub(input$stats_hist_category, start = 5), y = "構成比")+
+      labs(x = str_sub(input$stats_hist_category, start = 5), y = "Ratio",title = input$stats_hist_season)+
       scale_fill_brewer(palette = "Set1")+
       theme_classic()
   })
