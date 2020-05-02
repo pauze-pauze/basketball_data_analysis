@@ -97,7 +97,9 @@ shinyServer(function(input, output) {
       ) %>%
       ggplot(aes_(x = as.name(input$stats_hist_category), fill = as.name("League")))+
       geom_histogram(position = "identity", alpha = 0.5, bins = input$bins + 1)+
-      theme_bw()
+      labs(x = str_sub(input$stats_hist_category, start = 5), y = "試合数")+
+      scale_fill_brewer(palette = "Set1")+
+      theme_classic()
   })
   output$stats_hist_cnt <- renderPlot({
     data_for_stats_hist_cnt()
@@ -123,10 +125,59 @@ shinyServer(function(input, output) {
       ) %>%
       ggplot(aes_(x = as.name(input$stats_hist_category), fill = as.name("League")))+
       geom_histogram(stat = "density", position = "identity", alpha = 0.5)+
-      theme_bw()
+      labs(x = str_sub(input$stats_hist_category, start = 5), y = "構成比")+
+      scale_fill_brewer(palette = "Set1")+
+      theme_classic()
   })
   output$stats_hist_ratio <- renderPlot({
     data_for_stats_hist_ratio()
+  })
+  
+  #スタッツの時系列比較
+  data_for_stats_line <- eventReactive(input$do_line,{ 
+    data %>%
+    group_by(League, Season) %>%
+    summarise(
+      FGA = mean(Tot.P2A) + mean(Tot.P3A)
+      ,FGM = mean(Tot.P2M) + mean(Tot.P3M)
+      ,P2A = mean(Tot.P2A)
+      ,P2M = mean(Tot.P2M)
+      ,P3A = mean(Tot.P3A)
+      ,P3M = mean(Tot.P3M)
+      ,FTA = mean(Tot.FTA)
+      ,FTM = mean(Tot.FTM)
+      ,TR = mean(Tot.TRB)
+      ,OR = mean(Tot.ORB)
+      ,DR = mean(Tot.DRB)
+      ,AS = mean(Tot.AST)
+      ,TOV = mean(Tot.TOV)
+      ,BLK = mean(Tot.BLK)
+    ) %>%
+    pivot_longer( # NBAのデータのみ40分換算にするために転置
+      -c(League, Season)
+      ,names_to = "category"
+      ,values_to = "stats"
+    ) %>%
+    mutate(stats = if_else(League == "NBA", stats * 40 / 48, stats)) %>%
+    pivot_wider( # %の数値を作成
+      names_from = category
+      ,values_from = stats
+    )%>%
+    mutate(
+      FG_per = 100 * FGM / FGA
+      ,P2_per = 100 * P2M / P2A
+      ,P3_per = 100 * P3M / P3A
+      ,FT_per = 100 * FTM / FTA
+    ) %>%
+    ggplot(aes_(x = as.name("Season"), y = as.name(input$stats_line_category), group = as.name("League"),  color = as.name("League")))+
+    geom_line(size = 1)+ 
+    geom_point(size = 2)+
+    scale_color_brewer(palette = "Set1")+
+    theme_classic()
+  })
+  
+  output$stats_line <- renderPlot({
+    data_for_stats_line()
   })
   
 })
