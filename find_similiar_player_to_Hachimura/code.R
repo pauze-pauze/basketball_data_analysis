@@ -160,9 +160,9 @@ data_mp_20 <- data %>%
     season == 2020
   ) %>%
   filter(
-    mp >= 1500 
+    mp >= 1750 #ヤニス入れたいがゆえの時間設定
     | player == "Rui Hachimura"
-    #| player == "Kawhi Leonard" #特例
+    | player == "Kawhi Leonard" #特例
   ) %>%
   select(
     player
@@ -172,21 +172,17 @@ data_mp_filt <- data %>%
     data_mp_20
     ,by = "player"
   ) %>%
-  filter(
-    season != 2020
-    | player == "Rui Hachimura"
-  ) %>%
-  na.omit()%>%
+  na.omit() %>%
   mutate(
     player = str_c(player, as.character(season), sep = "_")
-  )
+  ) 
   
 #
 #2020シーズンは途中までしか試合がないから、MPやG、GSを変数に加えると外的要因が混じりこむので、基本的には割合ベースの数値にする
 #
 # 正規化
 
-data_main <- data_mp_filt  %>%
+data_main <- data_mp_filt %>%
   select(
     -c(
       g
@@ -208,46 +204,46 @@ skim(data_main)
 
 
 # 距離の計算 -------------------------------------------------------------------
-
 player_dist <- data_main %>%
   select(
-      -player
-    ) %>%
+    -player
+  ) %>%
   dist() %>%
   cmdscale() %>%
   data.frame() %>%
   bind_cols(data_main[1]) %>%
   mutate(
-     season_20_flag = case_when(
-         str_sub(player, start = -4, end = -1) == "2020" ~ "2020"
-         ,TRUE ~ "デビュー"
-       )
-   )
+    season_20_flag = case_when(
+      str_sub(player, start = -4, end = -1) == "2020" ~ "2020"
+      ,TRUE ~ "デビュー"
+    )
+  )
 hachi_x1 <- player_dist %>%
-   filter(
-       player == "Rui Hachimura_2020"
-     ) %>%
-   select(
-       X1
-     ) %>%
-     as.numeric()
+  filter(
+    player == "Rui Hachimura_2020"
+  ) %>%
+  select(
+    X1
+  ) %>%
+  as.numeric()
 hachi_x2 <- player_dist %>%
-   filter(
-       player == "Rui Hachimura_2020"
-     ) %>%
-   select(
-       X2
-     ) %>%
-     as.numeric()
+  filter(
+    player == "Rui Hachimura_2020"
+  ) %>%
+  select(
+    X2
+  ) %>%
+  as.numeric()
 dist_rank <-  player_dist %>%
-   mutate(
-       X1_dist = X1 - hachi_x1
-       ,X2_dist = X2 - hachi_x2
-       ,dist = sqrt(X1_dist^2 + X2_dist^2)
-     ) %>%
-   arrange(
-       dist
-     )
+  mutate(
+    X1_dist = X1 - hachi_x1
+    ,X2_dist = X2 - hachi_x2
+    ,dist = sqrt(X1_dist^2 + X2_dist^2)
+  ) %>%
+  arrange(
+    dist
+  )
+
 top10_similiar_player <- dist_rank %>%
   filter(
     season_20_flag == "デビュー"
@@ -255,19 +251,17 @@ top10_similiar_player <- dist_rank %>%
   ) %>%
   select(
     player
-    ,dist
   ) %>%
   head(11)
+
 data_mp_filt %>%
   inner_join(
     top10_similiar_player
     ,by = "player"
   ) %>%
-  arrange(
-    dist
-  ) %>%
-  write_csv("top10_similiar_player.csv")
+  view()
 # 階層的クラスタリング --------------------------------------------------------------
+
 dist_hclust <- data_main %>%
   select(
     -player
@@ -281,7 +275,7 @@ fviz_dend(
   ,cex = 0.4
   ,horiz = TRUE
   ,rect = TRUE
-  ,labelsize = 2
+  ,labelsize = 1
 )
 
 # k-means -----------------------------------------------------------------
@@ -316,7 +310,7 @@ km_res <- data_main %>%
   select(
     -player
   ) %>%
-  kmeans(9, nstart = 100)
+  kmeans(10, nstart = 100)
 
 
 data_main_kmeans <- data_main %>%
@@ -407,106 +401,3 @@ dist_rank <-  statsDF %>%
   )
 
 
-
-
-
-
-# 番外編_2020シーズンで似ている選手 ----------------------------------------------------------------
-# 前処理
-data_mp_filt_2020 <- data %>%
-  inner_join(
-    data_mp_20
-    ,by = "player"
-  ) %>%
-  filter(
-    season == 2020
-    | player == "Rui Hachimura"
-  ) %>%
-  na.omit()
-
-data_main_2020 <- data_mp_filt_2020  %>%
-  select(
-    -c(
-      g
-      ,gs
-      ,mp
-      ,pos
-      ,age
-      ,season
-    )
-  ) %>%
-  mutate(
-    x3ppercent = if_else(is.na(x3ppercent) == TRUE, 0, x3ppercent)
-  ) %>%
-  mutate_at(vars(-c(player)), funs(scale)) 
-
-rownames(data_main_2020) <- data_main_2020$player
-
-skim(data_main_2020)
-
-# 距離の計算
-player_dist_2020 <- data_main_2020 %>%
-  select(
-    -player
-  ) %>%
-  dist() %>%
-  cmdscale() %>%
-  data.frame() %>%
-  bind_cols(data_main_2020[1])
-
-hachi_x1_2020 <- player_dist_2020 %>%
-  filter(
-    player == "Rui Hachimura"
-  ) %>%
-  select(
-    X1
-  ) %>%
-  as.numeric()
-hachi_x2_2020 <- player_dist_2020 %>%
-  filter(
-    player == "Rui Hachimura"
-  ) %>%
-  select(
-    X2
-  ) %>%
-  as.numeric()
-dist_rank_2020 <-  player_dist_2020 %>%
-  mutate(
-    X1_dist = X1 - hachi_x1_2020
-    ,X2_dist = X2 - hachi_x2_2020
-    ,dist = sqrt(X1_dist^2 + X2_dist^2)
-  ) %>%
-  arrange(
-    dist
-  )
-top10_similiar_player_2020 <- dist_rank_2020 %>%
-  select(
-    player
-    ,dist
-  ) %>%
-  head(11)
-data_mp_filt_2020 %>%
-  inner_join(
-    top10_similiar_player_2020
-    ,by = "player"
-  ) %>%
-  arrange(
-    dist
-  ) %>%
-  write_csv("top10_similiar_player_2020.csv")
-
-# 階層的クラスタリング
-dist_hclust_2020 <- data_main_2020 %>%
-  select(
-    -player
-  ) %>%
-  dist()
-data_hclust_2020 <- hclust(dist_hclust_2020)
-fviz_dend(
-  data_hclust_2020
-  #,k = 8
-  ,cex = 0.4
-  ,horiz = TRUE
-  ,rect = TRUE
-  ,labelsize = 2
-)
