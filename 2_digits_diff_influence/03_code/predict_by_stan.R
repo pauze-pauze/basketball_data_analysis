@@ -83,16 +83,32 @@ glm_under_9pts
 set.seed(1031)
 eff <- marginal_effects(
   glm_under_9pts
-  ,method = "predict"
 )
-plot(eff)
 plot(glm_under_9pts)
 
 # predict over 10pts
 diff_data <- data.frame(half_time_pts_diff = seq(10, 20,1))
-set.seed(1031)
-predict(glm_under_9pts, diff_data, probs = c(0.3, 0.7))
+fitted(glm_under_9pts, diff_data) # なんでこれだとだめなんだろう
+linear_fit <- fitted(glm_under_9pts, diff_data, scale = "linear")[,1]
+fit <- 1 / (1 + exp(-linear_fit))
+fit[1]
 
+# simulation
+game_cnt <- df_base %>% # game cnt of 10 pts diff
+  filter(half_time_pts_diff == 10) %>%
+  count() %>%
+  as.numeric()
+win_cnt <- df_base %>% # win cnt of 10 pts diff
+  filter(half_time_pts_diff == 10 & win_flag == 1) %>%
+  count() %>%
+  as.numeric()
+pbinom(q = win_cnt, prob = fit[1],size = game_cnt,lower.tail = TRUE)
+
+set.seed(1031)
+data.frame(win_cnt = rbinom(n =1000000 ,size = game_cnt, prob = fit[1])) %>%
+  ggplot(aes(x = win_cnt)) +
+  geom_histogram(binwidth = 1) +
+  theme_bw()
 
 
 # base function predict ---------------------------------------------------
@@ -106,30 +122,6 @@ glm_model <- glm(win_flag ~ half_time_pts_diff, data = df_under_9pts_behind, fam
 summary(glm_model)
 
 # predict over 10pts
-over_10pts_data <- df_base %>%
-  select(half_time_pts_diff) %>%
-  filter(half_time_pts_diff >= 10) %>%
-  arrange(half_time_pts_diff)
-pred_lm <- predict(glm_model, over_10pts_data,se.fit = TRUE,  interval = "prediction")
-
-lines(over_10pts_data, pred_lm$fit[,2], col = "blue")
-pred_lm$fit
-
-# B1B2 all 
-df_base %>%
-  group_by(half_time_pts_diff) %>%
-  summarise(
-    game_cnt = n()
-    ,lose_cnt = sum(win_flag)
-    ,.groups = "drop"
-  ) %>%
-  mutate(
-    win_ratio = 100 * lose_cnt / game_cnt
-  )%>%
-  ggplot(aes(x = half_time_pts_diff, y = win_ratio))+
-  geom_line(size = 1)+
-  geom_point(size = 2)+
-  #geom_text_repel(aes(label = game_cnt), size = 3) +
-  labs(x = "ハーフタイムでのビハインド点数", y = "勝率(%)", title = "ハーフタイムでのビハインド点数ごとの勝率", caption = "B1・B2の2016~2019シーズンデータ")+
-  theme_bw()
-
+diff_data <- data.frame(half_time_pts_diff = seq(10, 20,1))
+fit_lm <- predict(glm_model, diff_data, interval = "confidence")
+fit_lm[1]
