@@ -6,7 +6,6 @@ library(patchwork)
 library(rstan)
 library(brms)
 
-package_version("bleaguer")
 # load data ---------------------------------------------------------------
 
 source("../B_data.R")
@@ -56,7 +55,7 @@ df_base <- df %>%
     ,pts_diff = win_team_pts - lose_team_pts
     ,half_time_pts_diff = exceed_team_pts - behind_team_pts
   ) %>%
-  filter(half_time_behind_flag == "behind")
+  filter(half_time_behind_flag == "behind" & exceed_team_pts != behind_team_pts) # delete even score at half time
 
 
 # bayes predict -----------------------------------------------------------
@@ -88,7 +87,7 @@ plot(glm_under_9pts)
 
 # predict over 10pts
 diff_data <- data.frame(half_time_pts_diff = seq(10, 20,1))
-fitted(glm_under_9pts, diff_data) # なんでこれだとだめなんだろう
+#fitted(glm_under_9pts, diff_data) # なんでこれだとだめなんだろう
 linear_fit <- fitted(glm_under_9pts, diff_data, scale = "linear")[,1]
 fit <- 1 / (1 + exp(-linear_fit))
 fit[1]
@@ -98,14 +97,16 @@ game_cnt <- df_base %>% # game cnt of 10 pts diff
   filter(half_time_pts_diff == 10) %>%
   count() %>%
   as.numeric()
+game_cnt
 win_cnt <- df_base %>% # win cnt of 10 pts diff
   filter(half_time_pts_diff == 10 & win_flag == 1) %>%
   count() %>%
   as.numeric()
-pbinom(q = win_cnt, prob = fit[1],size = game_cnt,lower.tail = TRUE)
+win_cnt
+qbinom(p = 0.1, prob = fit[1], size = game_cnt,lower.tail = TRUE)
 
 set.seed(1031)
-data.frame(win_cnt = rbinom(n =1000000 ,size = game_cnt, prob = fit[1])) %>%
+data.frame(win_cnt = rbinom(n =100000 ,size = game_cnt, prob = fit[1])) %>%
   ggplot(aes(x = win_cnt)) +
   geom_histogram(binwidth = 1) +
   theme_bw()

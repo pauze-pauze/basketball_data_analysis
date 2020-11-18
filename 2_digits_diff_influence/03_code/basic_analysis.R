@@ -57,7 +57,7 @@ df_base <- df %>%
     ,pts_diff = win_team_pts - lose_team_pts
     ,half_time_pts_diff = exceed_team_pts - behind_team_pts
   ) %>%
-  filter(half_time_behind_flag == "behind")
+  filter(half_time_behind_flag == "behind" & exceed_team_pts != behind_team_pts) # delete even score at half time
 
 
 
@@ -67,7 +67,7 @@ df_base <- df %>%
 
 
 # B1B2 all 
-df_base %>%
+p <- df_base %>%
   group_by(half_time_pts_diff) %>%
   summarise(
     game_cnt = n()
@@ -83,6 +83,8 @@ df_base %>%
   #geom_text_repel(aes(label = game_cnt), size = 3) +
   labs(x = "ハーフタイムでのビハインド点数", y = "勝率(%)", title = "ハーフタイムでのビハインド点数ごとの勝率", caption = "B1・B2の2016~2019シーズンデータ")+
   theme_bw()
+p
+ggsave(plot = p, file = "./02_output/02_img/transition_all.png")
 
 # B1 all 
 df_base %>%
