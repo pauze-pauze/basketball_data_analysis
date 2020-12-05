@@ -260,6 +260,41 @@ data_mp_filt %>%
     ,by = "player"
   ) %>%
   view()
+
+# ルーキーの平均との比較
+data %>%
+  inner_join(
+    player_first_season
+    ,by = c("player", "season")
+  ) %>%
+  filter(
+    season != 2020
+  ) %>%
+  summarise(
+    fg = mean(fg)
+    ,fga = mean(fga)
+    ,fgpercent = fg / fga
+    ,x3p = mean(x3p)
+    ,x3pa = mean(x3pa)
+    ,x3ppercent = x3p / x3pa
+    ,x2p = mean(x2p)
+    ,x2pa = mean(x2pa)
+    ,x2ppercent = x2p / x2pa
+    ,ft = mean(ft)
+    ,fta = mean(fta)
+    ,ftpercent = ft / fta
+    ,orb = mean(orb)
+    ,drb = mean(drb)
+    ,trb = mean(trb)
+    ,ast = mean(ast)
+    ,stl = mean(stl)
+    ,blk = mean(blk)
+    ,tov = mean(tov)
+    ,pf = mean(pf)
+    ,pts = mean(pts)
+  ) %>%
+  view()
+
 # 階層的クラスタリング --------------------------------------------------------------
 
 dist_hclust <- data_main %>%
