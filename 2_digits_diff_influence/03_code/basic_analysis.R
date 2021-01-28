@@ -85,6 +85,29 @@ p <- df_base %>%
   theme_bw()
 p
 ggsave(plot = p, file = "./02_output/02_img/transition_all.png")
+# B1B2 all in English
+p_english <- df_base %>%
+  group_by(half_time_pts_diff) %>%
+  summarise(
+    game_cnt = n()
+    ,lose_cnt = sum(win_flag)
+    ,.groups = "drop"
+  ) %>%
+  mutate(
+    win_ratio = 100 * lose_cnt / game_cnt
+  )%>%
+  ggplot(aes(x = half_time_pts_diff, y = win_ratio))+
+  geom_line(size = 1)+
+  geom_point(size = 2)+
+  geom_text_repel(aes(label = game_cnt), size = 3) +
+  labs(x = "Each behind points at halftime"
+       , y = "Win%"
+       , title = "Winning percentage of each behind points at halftime"
+       , caption = "The number in the gragh is games count of each behind points at halftime"
+              )+
+  theme_bw()
+p_english
+ggsave(plot = p_english, file = "./02_output/02_img/transition_all_in_English.png")
 
 # B1 all 
 df_base %>%
@@ -124,7 +147,8 @@ df_base %>%
   labs(x = "ハーフタイムでのビハインド点数", y = "勝率(%)", title = "ハーフタイムでのビハインド点数ごとの勝率(B2)", caption = "B2の2016~2019シーズンデータ")+
   theme_bw()
 
-# plot half time pts diff and final pts diff
+
+# plot half time pts diff and final pts diff 
 p <- df_base %>%
   mutate(pts_diff = if_else(win_flag == 1, pts_diff, -pts_diff))%>%
   group_by(pts_diff, half_time_pts_diff) %>%
@@ -137,6 +161,21 @@ p <- df_base %>%
 plot(p)
 ggsave(plot = p, file = "./02_output/02_img/half_time_diff_and_final_diff.png")
 
+# plot half time pts diff and final pts diff in English
+p_english <- df_base %>%
+  mutate(pts_diff = if_else(win_flag == 1, pts_diff, -pts_diff))%>%
+  group_by(pts_diff, half_time_pts_diff) %>%
+  summarise(game_cnt = n(), .groups = "drop") %>%
+  ggplot(aes(x = half_time_pts_diff, y = pts_diff, size = game_cnt))+
+  geom_point()+
+  scale_size_area(max_size = 5)+
+  labs(x = "Each behind points at halftime"
+       , y = "Final points diffrence"
+       , title = "Plot of halftime points behind and filan points difference"
+  )+
+  theme_bw()
+plot(p_english)
+ggsave(plot = p_english, file = "./02_output/02_img/half_time_diff_and_final_diff_in_English.png")
 #check big difference game
 # type1
 df_base %>%
