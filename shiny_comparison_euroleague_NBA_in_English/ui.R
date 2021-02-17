@@ -212,7 +212,7 @@ shinyUI(
                                    )
                          ,tabPanel("Source code"
                                    ,h6("The source code of this web application is here")
-                                   ,a(href = "https://github.com/pauze-pauze/basketball_data_analysis/tree/master/shiny_comparison_euroleague_NBA", "Link"))
+                                   ,a(href = "https://github.com/pauze-pauze/basketball_data_analysis/tree/master/shiny_comparison_euroleague_NBA_in_English", "Link"))
                          )
              )
 )
