@@ -17,7 +17,7 @@ data <- readRDS("S1_Data.rds")
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
-  #スタッツ比較のテーブル作成
+  #create tabel for compairing stats
   data_for_stats_comparison_all <- eventReactive(input$do_table,{
     data %>%
     filter(Season == input$stats_comparison_all) %>%

@@ -10,50 +10,51 @@
 source("library.R")
 
 shinyUI(
-  navbarPage("NBAとユーロリーグのスタッツ比較"
+  navbarPage("Comparison of stats between NBA and Euroleague"
              ,theme = shinythemes::shinytheme("paper")
-             ,tabPanel("本サイトの概要"
-                       ,h3("本サイトの概要")
+             ,tabPanel("About"
+                       ,h3("About")
                        ,br()
-                       ,p(h6("本サイトはユーロリーグとNBAのスタッツをインタラクティブに比較するためのサイトです")
-                          ,h6(strong("「スタッツ比較」"),"というタブでは、シーズンごとのBoxscoreをユーロリーグとNBAで比較できるようになっています")
-                          ,h6(strong("「スタッツのヒストグラム」"),"及び",strong("「スタッツの時系列推移」"),"については、見たいスタッツを選択してリーグごとにグラフ化することができます")
-                          ,h6("本サイトの作成者の情報やソースコードについては",strong("「その他」"),"タブをご参照ください")
-                          ,helpText("※数値の正確性や妥当性については保証しません。")
+                       ,p(h6("This web application is for interactive comparison of Euroleague and NBA stats")
+                          
+                          ,h6("In the ", strong('"Compare Season"'), " tab, you can compare boxscore both NBA and Euroleague by season.")
+                          ,h6("In the ", strong('"Compare Histogram"')," and ",strong('"Compare Time series transition"'), " tab, you can choose stats and make gragh.")
+                          ,h6("If you are interested in author of this web application or source code, please check ", strong('"Author and Code"'), " tab")
+                          ,helpText("※It is not ensured about the accuracy and validity")
                           ,br()
                           ,br()
-                          ,"データは下記論文内のものを利用しています")
+                          ,"The data is from this paper")
                        ,a(href = "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0223524", "Trends in NBA and Euroleague basketball: Analysis and comparison of statistical data from 2000 to 2017")
                        ,br()
                        ,br()
-                       ,p(h6("本サイトで利用している略称の意味は下記です")
-                          ,h6("FGA : FGの試投数")
-                          ,h6("FGM : FGの成功数")
-                          ,h6("FG_per/FG% : FGの成功率")
-                          ,h6("P2A : 2点シュートの試投数")
-                          ,h6("P2M : 2点シュートの成功数")
-                          ,h6("P2_per/P2% : 2点シュートの成功率")
-                          ,h6("P3A : 3点シュートの試投数")
-                          ,h6("P3M : 3点シュートの成功数")
-                          ,h6("P3_per/P3% : 3点シュートの成功率")
-                          ,h6("FTA : フリースローの試投数")
-                          ,h6("FTM : フリースローの成功数")
-                          ,h6("FT_per/FT% : フリースローの成功率")
-                          ,h6("TRB : 総リバウンド数")
-                          ,h6("ORB : オフェンスリバウンド数")
-                          ,h6("DRB : ディフェンスリバウンド数")
-                          ,h6("AST : アシスト数")
-                          ,h6("TOV : ターンオーバー数")
-                          ,h6("BLK : ブロック数")
+                       ,p(h6("What the abbreviations in this web application mean is here.")
+                          ,h6("FGA : Field Goals Attempted")
+                          ,h6("FGM : Field Goals Made")
+                          ,h6("FG_per/FG% : Field Goal Percentage")
+                          ,h6("P2A : 2 Point Field Goals Attempted")
+                          ,h6("P2M : 2 Point Field Goals Made")
+                          ,h6("P2_per/P2% :  2 Point Field Goal Percentage")
+                          ,h6("P3A : 3 Point Field Goals Attempted")
+                          ,h6("P3M : 3 Point Field Goals Made")
+                          ,h6("P3_per/P3% :  3 Point Field Goal Percentage")
+                          ,h6("FTA : Free Throws Attempted")
+                          ,h6("FTM : Free Throws Made")
+                          ,h6("FT_per/FT% : Free Throw Percentage")
+                          ,h6("TRB : Total Rebounds")
+                          ,h6("ORB : Offensive Rebounds")
+                          ,h6("DRB : Defensive Rebounds")
+                          ,h6("AST : Assists")
+                          ,h6("TOV : Turnovers")
+                          ,h6("BLK : Blocks")
                           )
                        )
-             ,tabPanel("スタッツ比較"
-                       ,h3("スタッツ比較")
+             ,tabPanel("Compare Season"
+                       ,h3("Compare season stats")
                        ,sidebarLayout(
                          sidebarPanel(
                            selectInput(
                              inputId = "stats_comparison_all"
-                             ,label = h5(strong("シーズンを選択してください"))
+                             ,label = h5(strong("Choose season"))
                              ,choices = list(
                                "2000-01" = "2000-01"
                                ,"2001-02" = "2001-02"
@@ -76,23 +77,23 @@ shinyUI(
                              #,selected = 
                              #,multiple = 
                            )
-                           ,actionButton("do_table", "このシーズンを見る")
+                           ,actionButton("do_table", "See this season")
                          )
                          ,mainPanel(
                            tableOutput("stats_comparison_all_table")
-                           ,p("※NBAのスタッツは40分換算")
-                           ,p("※元データの都合で延長の考慮はしていません。")
-                           ,p("※スタッツの定義はNBAとEuroleagueで異なる点があるので、予めご了承ください。") 
+                           ,p("※NBA stats is converted into per 40 minutes.")
+                           ,p("※Overtime is not considered.")
+                           ,p("※The definition of stats between NBA and Euroleague is are partially different.") 
                          ) 
                         )
                        )
-             ,tabPanel("スタッツのヒストグラム"
-                       ,h3("スタッツのヒストグラム")
+             ,tabPanel("Compare Histogram"
+                       ,h3("Compare Histogram")
                        ,sidebarLayout(
                          sidebarPanel(
                            selectInput(
                              inputId = "stats_hist_season"
-                             ,label = h5(strong("シーズンを選択してください"))
+                             ,label = h5(strong("Choose season"))
                              ,choices = list(
                                "2000-01" = "2000-01"
                                ,"2001-02" = "2001-02"
@@ -115,7 +116,7 @@ shinyUI(
                           )
                           ,selectInput(
                             inputId = "stats_hist_category"
-                            ,label = h5(strong("見たいスタッツを選択してください"))
+                            ,label = h5(strong("Choose stats"))
                             ,choices = list(
                               "FGA" = "Tot.FGA"
                               ,"FGM" = "Tot.FGM"
@@ -136,38 +137,37 @@ shinyUI(
                           )
                           ,sliderInput(
                             "bins"
-                            ,h5(strong("ビンの数を選択してください"))
+                            ,h5(strong("Select the number of bins."))
                             ,min = 1
                             ,max = 100
                             ,value = 30
                           )
-                          ,actionButton("do_hist_cnt", "上記の条件で出力する")
+                          ,actionButton("do_hist_cnt", "Output under the above condtions.")
                          )
                          ,mainPanel(
                            tabsetPanel(
                              type = "tabs"
                              ,tabPanel(
-                               "件数の分布"
+                               "count distributuion"
                                ,plotOutput("stats_hist_cnt", width = 800, height = 500)
                              )
                              ,tabPanel(
-                               "件数の密度分布"
+                               "Probability density distribution"
                                ,plotOutput("stats_hist_ratio", width = 800, height = 500)
                              )
                            )
-                           ,p("※NBAのスタッツは40分換算")
-                           ,p("※元データの都合で延長の考慮はしていません。")
-                           ,p("※スタッツの定義はNBAとEuroleagueで異なる点があるので、予めご了承ください。") 
-                           ,p("※「ビン」は出力された棒の数を表しています。数が多いほど棒の幅が小さくなります。また、件数の密度分布の表示には影響しません")
+                           ,p("※NBA stats is converted into per 40 minutes.")
+                           ,p("※Overtime is not considered.")
+                           ,p("※The definition of stats between NBA and Euroleague is are partially different.") 
                          )
                        ))
-             ,tabPanel("スタッツの時系列推移"
-                       ,h3("スタッツの時系列推移")
+             ,tabPanel("Compare Time series transition"
+                       ,h3("Compare Time series transition")
                        ,sidebarLayout(
                          sidebarPanel(
                            selectInput(
                              inputId = "stats_line_category"
-                             ,label = h5(strong("見たいスタッツを選択してください"))
+                             ,label = h5(strong("Choose stats"))
                              ,choices = list(
                                "FGA" = "FGA"
                                ,"FGM" = "FGM"
@@ -190,30 +190,29 @@ shinyUI(
                              )
                              ,selected = "FGA"
                            )
-                           ,actionButton("do_line", "上記のスタッツを出力する")
+                           ,actionButton("do_line", "Output the stats")
                          )
                          ,mainPanel(
                            plotOutput("stats_line", width = 800, height = 500)
-                           ,p("※NBAのスタッツは40分換算")
-                           ,p("※元データの都合で延長の考慮はしていません。")
-                           ,p("※スタッツの定義はNBAとEuroleagueで異なる点があるので、予めご了承ください。") 
+                           ,p("※NBA stats is converted into per 40 minutes.")
+                           ,p("※Overtime is not considered.")
+                           ,p("※The definition of stats between NBA and Euroleague is are partially different.") 
                          )
                        ))
-             ,navbarMenu("その他"
-                         ,tabPanel("自己紹介"
-                                   ,h3("自己紹介")
+             ,navbarMenu("Author and Code"
+                         ,tabPanel("Self introduction"
+                                   ,h3("Self introduction")
                                    ,br()
-                                   ,h6("「バスケのデータ分析」というアカウント名で活動しています")
-                                   ,h6("BリーグやNBAのデータを利用したスタッツ分析や可視化、その他バスケのデータ分析に関する文献の紹介などをしています。")
-                                   ,h6("分析テーマや、こういう仕事一緒にやってみませんかなどなど募集してます！")
-                                   ,h6("ご連絡などは下記アカウントまでお願いいいたします！")
-                                   ,a(href = "https://twitter.com/b__s__k__t", "Twitterアカウント")
+                                   ,h6("I,m H.YAMA, a basketball data analyst in Japan.")
+                                   ,h6("I am fond of basketball data analytics and would like to write articles about basketball data analysis (NBA, B.LEAGUE-Japanese professinal basketball league- etc). ")
+                                   ,h6("There are my accounts below.")
+                                   ,a(href = "https://twitter.com/HYAMA_1160", "Twitter account")
                                    ,br()
-                                   ,a(href = "https://note.com/b__s__k__t", "ウェブサイト(note)")
+                                   ,a(href = "https://yamahisa.medium.com/", "Medium")
                                    )
-                         ,tabPanel("ソースコード"
-                                   ,h6("本サイトのソースコードは下記です")
-                                   ,a(href = "https://github.com/pauze-pauze/basketball_data_analysis/tree/master/shiny_comparison_euroleague_NBA", "ソースコードへのリンク"))
+                         ,tabPanel("Source code"
+                                   ,h6("The source code of this web application is here")
+                                   ,a(href = "https://github.com/pauze-pauze/basketball_data_analysis/tree/master/shiny_comparison_euroleague_NBA", "Link"))
                          )
              )
 )
