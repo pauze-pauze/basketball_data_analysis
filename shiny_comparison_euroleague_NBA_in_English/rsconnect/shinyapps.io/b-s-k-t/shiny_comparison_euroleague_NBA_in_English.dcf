@@ -1,0 +1,12 @@
+name: shiny_comparison_euroleague_NBA_in_English
+title: shiny_comparison_euroleague_NBA_in_English
+username:
+account: b-s-k-t
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3651454
+bundleId: 4235464
+url: https://b-s-k-t.shinyapps.io/shiny_comparison_euroleague_NBA_in_English/
+when: 1613568529.92638
+asMultiple: FALSE
+asStatic: FALSE
