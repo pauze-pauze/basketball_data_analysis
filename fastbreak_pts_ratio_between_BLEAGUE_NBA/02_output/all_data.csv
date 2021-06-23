@@ -1,0 +1,243 @@
+Season,Team,fast_break_ratio,league
+2016-17,Golden State Warriors,26.0%,NBA
+2018-19,Sacramento Kings,24.4%,NBA
+2016-17,Phoenix Suns,24.0%,NBA
+2018-19,Los Angeles Lakers,23.1%,NBA
+2017-18,Golden State Warriors,22.7%,NBA
+2019-20,Toronto Raptors,22.3%,NBA
+2017-18,Los Angeles Lakers,21.6%,NBA
+2018-19,Golden State Warriors,21.6%,NBA
+2019-20,Los Angeles Lakers,21.6%,NBA
+2018-19,Toronto Raptors,21.3%,NBA
+2018-19,Oklahoma City Thunder,21.2%,NBA
+2016-17,Oklahoma City Thunder,21.1%,NBA
+2020-21,Memphis Grizzlies,20.4%,NBA
+2019-20,Memphis Grizzlies,20.3%,NBA
+2019-20,Milwaukee Bucks,20.1%,NBA
+2018-19,Milwaukee Bucks,20.0%,NBA
+2016-17,Washington Wizards,19.5%,NBA
+2016-17,Houston Rockets,19.3%,NBA
+2016-17,Los Angeles Lakers,19.3%,NBA
+2018-19,Boston Celtics,19.3%,NBA
+2016-17,New Orleans Pelicans,19.2%,NBA
+2020-21,Indiana Pacers,19.2%,NBA
+2019-20,New Orleans Pelicans,19.1%,NBA
+2017-18,Oklahoma City Thunder,18.8%,NBA
+2018-19,Phoenix Suns,18.8%,NBA
+2017-18,Indiana Pacers,18.7%,NBA
+2016-17,Orlando Magic,18.5%,NBA
+2019-20,Chicago Bulls,18.5%,NBA
+2017-18,Milwaukee Bucks,18.4%,NBA
+2017-18,Phoenix Suns,18.4%,NBA
+2017-18,New Orleans Pelicans,18.3%,NBA
+2018-19,Indiana Pacers,18.0%,NBA
+2016-17,Chicago Bulls,17.9%,NBA
+2018-19,Atlanta Hawks,17.9%,NBA
+2019-20,Boston Celtics,17.9%,NBA
+2020-21,Philadelphia 76ers,17.9%,NBA
+2016-17,Milwaukee Bucks,17.7%,NBA
+2017-18,Memphis Grizzlies,17.7%,NBA
+2016-17,Brooklyn Nets,17.6%,NBA
+2018-19,Philadelphia 76ers,17.3%,NBA
+2019-20,Golden State Warriors,17.2%,NBA
+2019-20,Phoenix Suns,17.2%,NBA
+2016-17,LA Clippers,17.1%,NBA
+2018-19,New Orleans Pelicans,17.1%,NBA
+2016-17,Denver Nuggets,16.9%,NBA
+2020-21,Golden State Warriors,16.9%,NBA
+2016-17,Philadelphia 76ers,16.8%,NBA
+2020-21,秋田ノーザンハピネッツ,16.7%,B.LEAGUE
+2018-19,LA Clippers,16.5%,NBA
+2018-19,Washington Wizards,16.5%,NBA
+2019-20,Houston Rockets,16.5%,NBA
+2020-21,Charlotte Hornets,16.5%,NBA
+2020-21,Sacramento Kings,16.5%,NBA
+2020-21,New Orleans Pelicans,16.4%,NBA
+2020-21,Toronto Raptors,16.4%,NBA
+2020-21,エヴェッサ大阪,16.3%,B.LEAGUE
+2017-18,Denver Nuggets,16.3%,NBA
+2017-18,LA Clippers,16.3%,NBA
+2017-18,Orlando Magic,16.3%,NBA
+2019-20,Philadelphia 76ers,16.3%,NBA
+2016-17,Minnesota Timberwolves,16.1%,NBA
+2020-21,Brooklyn Nets,16.1%,NBA
+2020-21,Los Angeles Lakers,16.1%,NBA
+2020-21,Milwaukee Bucks,16.1%,NBA
+2017-18,Toronto Raptors,15.9%,NBA
+2018-19,Memphis Grizzlies,15.9%,NBA
+2016-17,Atlanta Hawks,15.7%,NBA
+2016-17,Detroit Pistons,15.7%,NBA
+2019-20,LA Clippers,15.7%,NBA
+2016-17,Cleveland Cavaliers,15.6%,NBA
+2019-20,Brooklyn Nets,15.6%,NBA
+2019-20,Indiana Pacers,15.6%,NBA
+2019-20,San Antonio Spurs,15.6%,NBA
+2019-20,Washington Wizards,15.6%,NBA
+2019-20,Sacramento Kings,15.5%,NBA
+2020-21,島根スサノオマジック,15.4%,B.LEAGUE
+2017-18,千葉ジェッツ,15.4%,B.LEAGUE
+2016-17,Boston Celtics,15.3%,NBA
+2016-17,San Antonio Spurs,15.3%,NBA
+2018-19,Chicago Bulls,15.3%,NBA
+2019-20,Atlanta Hawks,15.3%,NBA
+2019-20,秋田ノーザンハピネッツ,15.3%,B.LEAGUE
+2016-17,Toronto Raptors,15.2%,NBA
+2017-18,Chicago Bulls,15.2%,NBA
+2018-19,Denver Nuggets,15.2%,NBA
+2019-20,Portland Trail Blazers,15.2%,NBA
+2017-18,Cleveland Cavaliers,15.1%,NBA
+2018-19,Dallas Mavericks,15.1%,NBA
+2019-20,Charlotte Hornets,15.1%,NBA
+2020-21,Phoenix Suns,15.1%,NBA
+2018-19,アルバルク東京,15.0%,B.LEAGUE
+2019-20,千葉ジェッツ,14.9%,B.LEAGUE
+2019-20,Orlando Magic,14.8%,NBA
+2019-20,サンロッカーズ渋谷,14.7%,B.LEAGUE
+2020-21,Miami Heat,14.7%,NBA
+2018-19,千葉ジェッツ,14.6%,B.LEAGUE
+2019-20,レバンガ北海道,14.6%,B.LEAGUE
+2017-18,Washington Wizards,14.5%,NBA
+2020-21,Cleveland Cavaliers,14.5%,NBA
+2020-21,宇都宮ブレックス,14.4%,B.LEAGUE
+2016-17,Miami Heat,14.4%,NBA
+2020-21,Denver Nuggets,14.4%,NBA
+2020-21,Minnesota Timberwolves,14.4%,NBA
+2019-20,エヴェッサ大阪,14.3%,B.LEAGUE
+2017-18,Sacramento Kings,14.1%,NBA
+2018-19,Charlotte Hornets,14.1%,NBA
+2018-19,Houston Rockets,14.1%,NBA
+2018-19,New York Knicks,14.1%,NBA
+2019-20,Denver Nuggets,14.1%,NBA
+2020-21,San Antonio Spurs,14.1%,NBA
+2019-20,名古屋ダイヤモンドドルフィンズ,14.1%,B.LEAGUE
+2020-21,サンロッカーズ渋谷,14.1%,B.LEAGUE
+2020-21,千葉ジェッツ,14.0%,B.LEAGUE
+2016-17,Portland Trail Blazers,14.0%,NBA
+2020-21,Boston Celtics,14.0%,NBA
+2016-17,New York Knicks,13.9%,NBA
+2016-17,Sacramento Kings,13.9%,NBA
+2017-18,Detroit Pistons,13.9%,NBA
+2017-18,Philadelphia 76ers,13.9%,NBA
+2018-19,Brooklyn Nets,13.9%,NBA
+2018-19,Minnesota Timberwolves,13.9%,NBA
+2020-21,Chicago Bulls,13.9%,NBA
+2019-20,宇都宮ブレックス,13.7%,B.LEAGUE
+2017-18,Houston Rockets,13.6%,NBA
+2019-20,Detroit Pistons,13.6%,NBA
+2020-21,Houston Rockets,13.6%,NBA
+2020-21,Utah Jazz,13.6%,NBA
+2018-19,名古屋ダイヤモンドドルフィンズ,13.5%,B.LEAGUE
+2016-17,Indiana Pacers,13.5%,NBA
+2016-17,Memphis Grizzlies,13.5%,NBA
+2018-19,Cleveland Cavaliers,13.5%,NBA
+2018-19,Orlando Magic,13.5%,NBA
+2019-20,Miami Heat,13.5%,NBA
+2020-21,Dallas Mavericks,13.5%,NBA
+2018-19,秋田ノーザンハピネッツ,13.4%,B.LEAGUE
+2017-18,Atlanta Hawks,13.3%,NBA
+2017-18,Brooklyn Nets,13.3%,NBA
+2017-18,San Antonio Spurs,13.3%,NBA
+2019-20,Dallas Mavericks,13.3%,NBA
+2020-21,Detroit Pistons,13.3%,NBA
+2020-21,Portland Trail Blazers,13.3%,NBA
+2017-18,滋賀レイクスターズ,13.3%,B.LEAGUE
+2020-21,三遠ネオフェニックス,13.2%,B.LEAGUE
+2019-20,Cleveland Cavaliers,13.2%,NBA
+2019-20,Minnesota Timberwolves,13.2%,NBA
+2020-21,Orlando Magic,13.2%,NBA
+2017-18,Utah Jazz,13.1%,NBA
+2017-18,栃木ブレックス,13.0%,B.LEAGUE
+2017-18,レバンガ北海道,13.0%,B.LEAGUE
+2019-20,川崎ブレイブサンダース,12.9%,B.LEAGUE
+2017-18,Dallas Mavericks,12.9%,NBA
+2018-19,Portland Trail Blazers,12.8%,NBA
+2020-21,Washington Wizards,12.8%,NBA
+2019-20,横浜ビー・コルセアーズ,12.7%,B.LEAGUE
+2018-19,Utah Jazz,12.7%,NBA
+2018-19,Detroit Pistons,12.5%,NBA
+2018-19,Miami Heat,12.5%,NBA
+2019-20,Utah Jazz,12.5%,NBA
+2018-19,San Antonio Spurs,12.4%,NBA
+2019-20,アルバルク東京,12.4%,B.LEAGUE
+2020-21,名古屋ダイヤモンドドルフィンズ,12.4%,B.LEAGUE
+2019-20,三遠ネオフェニックス,12.4%,B.LEAGUE
+2018-19,横浜ビー・コルセアーズ,12.4%,B.LEAGUE
+2019-20,富山グラウジーズ,12.3%,B.LEAGUE
+2018-19,三遠ネオフェニックス,12.3%,B.LEAGUE
+2019-20,島根スサノオマジック,12.3%,B.LEAGUE
+2018-19,サンロッカーズ渋谷,12.2%,B.LEAGUE
+2017-18,Boston Celtics,12.1%,NBA
+2020-21,LA Clippers,12.1%,NBA
+2018-19,栃木ブレックス,12.1%,B.LEAGUE
+2020-21,新潟アルビレックスBB,12.1%,B.LEAGUE
+2016-17,Charlotte Hornets,12.0%,NBA
+2017-18,Miami Heat,12.0%,NBA
+2020-21,広島ドラゴンフライズ,11.9%,B.LEAGUE
+2019-20,New York Knicks,11.9%,NBA
+2017-18,Minnesota Timberwolves,11.7%,NBA
+2020-21,Atlanta Hawks,11.7%,NBA
+2020-21,Oklahoma City Thunder,11.7%,NBA
+2019-20,新潟アルビレックスBB,11.6%,B.LEAGUE
+2020-21,レバンガ北海道,11.6%,B.LEAGUE
+2017-18,島根スサノオマジック,11.5%,B.LEAGUE
+2018-19,富山グラウジーズ,11.5%,B.LEAGUE
+2017-18,Charlotte Hornets,11.5%,NBA
+2019-20,Oklahoma City Thunder,11.5%,NBA
+2017-18,アルバルク東京,11.5%,B.LEAGUE
+2020-21,川崎ブレイブサンダース,11.4%,B.LEAGUE
+2018-19,川崎ブレイブサンダース,11.4%,B.LEAGUE
+2020-21,京都ハンナリーズ,11.4%,B.LEAGUE
+2019-20,京都ハンナリーズ,11.2%,B.LEAGUE
+2020-21,New York Knicks,11.1%,NBA
+2020-21,富山グラウジーズ,11.0%,B.LEAGUE
+2017-18,New York Knicks,10.9%,NBA
+2017-18,西宮ストークス,10.9%,B.LEAGUE
+2017-18,横浜ビー・コルセアーズ,10.8%,B.LEAGUE
+2017-18,富山グラウジーズ,10.8%,B.LEAGUE
+2019-20,琉球ゴールデンキングス,10.8%,B.LEAGUE
+2018-19,レバンガ北海道,10.8%,B.LEAGUE
+2016-17,Utah Jazz,10.8%,NBA
+2016-17,Dallas Mavericks,10.5%,NBA
+2019-20,滋賀レイクスターズ,10.5%,B.LEAGUE
+2019-20,シーホース三河,10.4%,B.LEAGUE
+2018-19,ライジングゼファー福岡,10.3%,B.LEAGUE
+2017-18,サンロッカーズ渋谷,10.3%,B.LEAGUE
+2017-18,名古屋ダイヤモンドドルフィンズ,10.3%,B.LEAGUE
+2017-18,Portland Trail Blazers,10.1%,NBA
+2018-19,滋賀レイクスターズ,10.1%,B.LEAGUE
+2020-21,滋賀レイクスターズ,10.0%,B.LEAGUE
+2017-18,エヴェッサ大阪,9.9%,B.LEAGUE
+2020-21,横浜ビー・コルセアーズ,9.7%,B.LEAGUE
+2017-18,琉球ゴールデンキングス,9.5%,B.LEAGUE
+2018-19,エヴェッサ大阪,9.4%,B.LEAGUE
+2020-21,琉球ゴールデンキングス,9.4%,B.LEAGUE
+2020-21,シーホース三河,9.3%,B.LEAGUE
+2017-18,三遠ネオフェニックス,8.9%,B.LEAGUE
+2020-21,アルバルク東京,8.8%,B.LEAGUE
+2018-19,琉球ゴールデンキングス,8.7%,B.LEAGUE
+2018-19,新潟アルビレックスBB,8.6%,B.LEAGUE
+2017-18,シーホース三河,8.5%,B.LEAGUE
+2017-18,川崎ブレイブサンダース,8.3%,B.LEAGUE
+2017-18,新潟アルビレックスBB,8.3%,B.LEAGUE
+2018-19,シーホース三河,8.2%,B.LEAGUE
+2018-19,京都ハンナリーズ,7.8%,B.LEAGUE
+2016-17,千葉ジェッツ,7.6%,B.LEAGUE
+2020-21,信州ブレイブウォリアーズ,7.4%,B.LEAGUE
+2016-17,レバンガ北海道,7.0%,B.LEAGUE
+2017-18,京都ハンナリーズ,6.9%,B.LEAGUE
+2016-17,川崎ブレイブサンダース,6.8%,B.LEAGUE
+2016-17,富山グラウジーズ,6.8%,B.LEAGUE
+2016-17,栃木ブレックス,6.7%,B.LEAGUE
+2016-17,仙台89ERS,6.5%,B.LEAGUE
+2016-17,京都ハンナリーズ,6.3%,B.LEAGUE
+2016-17,アルバルク東京,6.1%,B.LEAGUE
+2016-17,サンロッカーズ渋谷,6.0%,B.LEAGUE
+2016-17,琉球ゴールデンキングス,5.6%,B.LEAGUE
+2016-17,滋賀レイクスターズ,5.3%,B.LEAGUE
+2016-17,三遠ネオフェニックス,5.3%,B.LEAGUE
+2016-17,名古屋ダイヤモンドドルフィンズ,5.3%,B.LEAGUE
+2016-17,秋田ノーザンハピネッツ,5.3%,B.LEAGUE
+2016-17,エヴェッサ大阪,5.3%,B.LEAGUE
+2016-17,新潟アルビレックスBB,5.1%,B.LEAGUE
+2016-17,横浜ビー・コルセアーズ,3.9%,B.LEAGUE
+2016-17,シーホース三河,3.8%,B.LEAGUE
