@@ -125,7 +125,7 @@ hist_base <- output_bleague %>%
 hist_base %>%
   group_by(league) %>%
   summarise(cnt = n())
-
+#In Japanese
 p <- ggplot(data = hist_base, aes(x = fast_break_ratio))+
   geom_histogram(aes(color = league, fill = league), alpha = 0.5) +
   labs(x = "得点に占めるファストブレイクの割合"
@@ -138,6 +138,20 @@ p <- ggplot(data = hist_base, aes(x = fast_break_ratio))+
   theme_classic()
 plot(p)
 ggsave(plot = p, filename = "./02_output/fast_break_raio_histgram.png", height = 4.5, width = 8, dpi = 100)
+# In English
+p_eng <- ggplot(data = hist_base, aes(x = fast_break_ratio))+
+  geom_histogram(aes(color = league, fill = league), alpha = 0.5) +
+  labs(x = "The ratio of fastbreak points in total points"
+       ,y = "team count"
+       ,title = "Compare ratio of fastbreak points in total point between NBA and B.LEAGUE"
+       ,subtitle = "  2016-17~2020-21's regular season in B1 and NBA is subject to this gragh"
+       ,caption = "The definition of fastbreak is diffrent between NBA and FIBA、I multiply fastbreak ratio of NBA and 4/3 to adjust."
+  ) +
+  scale_x_continuous(labels = percent) +
+  theme_classic()
+plot(p_eng)
+ggsave(plot = p_eng, filename = "./02_output/fast_break_raio_histgram_eng.png", height = 4.5, width = 8, dpi = 100)
+
 
 # 比率の降順のアウトプット
 hist_base %>%
