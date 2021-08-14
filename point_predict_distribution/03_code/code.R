@@ -2,10 +2,6 @@
 # import libraries --------------------------------------------------------
 
 library(tidyverse)
-library(lubridate)
-library(skimr)
-library(ggrepel)
-library(patchwork)
 library(furrr)
 
 # load data ---------------------------------------------------------------
@@ -118,43 +114,6 @@ p_same_num <- data_base %>%
 plot(p_same_num)
 ggsave(file = "./02_output/same_game_cnt.png", p_same_num)
 
-# 10倍の試合数でシミュレーションver
-plan(multiprocess(workers = 6))
-plan()
-pts_dist <- future_map_dbl(seq(game_team_cnt * 10), ~ score(), .options = future_options(seed = 1031L)) 
-
-
-pts_dist_tibble <- as_tibble(pts_dist) %>%
-  mutate(
-    type = "simulation"
-  ) %>%
-  rename(PTS = value)
-
-
-#可視化
-p_10times_num <- data_base %>%
-  select(PTS) %>%
-  mutate(
-    type = "actual"
-  ) %>%
-  bind_rows(pts_dist_tibble) %>%
-  ggplot(aes(x = PTS, fill = type))+
-  geom_density(alpha=0.5)+
-  labs(x = "得点数", y = "確率密度", title = "得点数の実際の分布とシミュレーションの比較(seed = 1031)", caption = "シミュレーションを10シーズン分行った")+
-  theme_classic()
-plot(p_10times_num)
-ggsave(file = "./02_output/same_10times_cnt.png", p_10times_num)
-
-
-
-
-
-
-
-
-
-
-
 # 得点の均等な幅で10分割する処理
 quant_actual_pts <- quantile(data_base$PTS, c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9))
 quant_actual_pts <- seq(min(data_base$PTS), max(data_base$PTS), length = 11)
@@ -204,6 +163,45 @@ test_data <- quant_actual %>%
   as.matrix()
 
 chisq.test(test_data, correct = FALSE)
+
+# 10倍の試合数でシミュレーションver
+plan(multiprocess(workers = 6))
+plan()
+pts_dist <- future_map_dbl(seq(game_team_cnt * 10), ~ score(), .options = future_options(seed = 1031L)) 
+
+
+pts_dist_tibble <- as_tibble(pts_dist) %>%
+  mutate(
+    type = "simulation"
+  ) %>%
+  rename(PTS = value)
+
+
+#可視化
+p_10times_num <- data_base %>%
+  select(PTS) %>%
+  mutate(
+    type = "actual"
+  ) %>%
+  bind_rows(pts_dist_tibble) %>%
+  ggplot(aes(x = PTS, fill = type))+
+  geom_density(alpha=0.5)+
+  labs(x = "得点数", y = "確率密度", title = "得点数の実際の分布とシミュレーションの比較(seed = 1031)", caption = "シミュレーションを10シーズン分行った")+
+  theme_classic()
+plot(p_10times_num)
+ggsave(file = "./02_output/same_10times_cnt.png", p_10times_num)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
