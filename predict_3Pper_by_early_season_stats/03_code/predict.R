@@ -35,7 +35,7 @@ most_3pa_players_prior <- prior_base %>%
   summarise(P3A_all = sum(F3GA), P3M_all = sum(F3GM)) %>%
   ungroup() %>%
   group_by(Season) %>% # to choose each season's top 3PA players
-  mutate(rank = dense_rank(desc(P3A_all))) %>%
+  mutate(rank = min_rank(desc(P3A_all))) %>%
   filter(rank <= player_3P_rank_prior) %>%
   mutate(P3per_all = P3M_all / P3A_all)
 
@@ -161,3 +161,4 @@ result <- base_df %>%
     df
     ,by = "rn"
   )
+# write.csv(result, "./02_output/predict_result.csv", fileEncoding = "CP932")

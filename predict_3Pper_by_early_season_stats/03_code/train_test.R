@@ -43,9 +43,13 @@ most_3pa_players_prior <- prior_base %>%
   mutate(P3per_all = P3M_all / P3A_all)
 
 # check prior distribution
-most_3pa_players_prior %>%
+prior_distribution <- most_3pa_players_prior %>%
   ggplot(aes(x = P3per_all)) +
-  geom_histogram(bins = 10)
+  geom_histogram(bins = 10) +
+  labs(x = "3P%", y = "件数", title = "2016-17,2017-18シーズンの3PA上位40人の3P%分布") +
+  theme_classic()
+plot(prior_distribution)
+#ggsave(file = "./02_output/example_prior_distribution.png", plot = prior_distribution)
 ### use this data to make prior distrobution (normal distribution)
 
 
@@ -71,7 +75,7 @@ most_3pa_players <- base %>%
   group_by(PlayerId, Player, TeamId) %>%
   summarise(P3A_all = sum(F3GA), P3M_all = sum(F3GM)) %>%
   ungroup() %>%
-  mutate(rank = dense_rank(desc(P3A_all))) %>%
+  mutate(rank = min_rank(desc(P3A_all))) %>%
   filter(rank <= player_3P_rank) %>%
   mutate(P3per_all = P3M_all / P3A_all)
 
@@ -110,6 +114,27 @@ first_xx_times_stats <- first_xx_times_game %>%
   ungroup() %>%
   mutate(rn = row_number())
 
+# sample post distribution
+f3g_made_AS <- first_xx_times_stats %>%
+  filter(PlayerId == 10815) %>% #安藤周人
+  select(P3M_xx_times) %>%
+  as.numeric()
+
+f3g_miss_AS <- first_xx_times_stats %>%
+  mutate(P3miss_xx_times = P3A_xx_times - P3M_xx_times) %>%
+  filter(PlayerId == 10815) %>%
+  select(P3miss_xx_times) %>%
+  as.numeric()
+
+Y_AS <- rep(c(1, 0), c(f3g_made_AS, f3g_miss_AS))
+N_AS <- f3g_made_AS + f3g_miss_AS
+data_AS <- list(Y = Y_AS, N = N_AS, prior_mean = prior_mean, prior_sd = prior_sd)
+fit_AS <- stan(file='./03_code/train_test.stan', data=data_AS, seed=seed)
+
+print(fit_AS, probs = c(0.025, 0.1, 0.25, 0.5, 0.75,  0.9, 0.975))
+# 10%tileが0.36, 90%tileが0.44くらい
+post_distribution <- stan_hist(fit_AS, pars = "p")
+# ggsave(file = "./02_output/example_post_distribution.png", plot = post_distribution)
 
 # sim code ----------------------------------------------------------------
 
@@ -158,22 +183,41 @@ result <- first_xx_times_stats %>%
     df
     ,by = "rn"
   )
+# write.csv(result, "./02_output/train_test_result.csv", fileEncoding = "CP932")
+
+# appendix
 result %>%
   mutate(
     within_80per = case_when(
-      P3per_all >= tile_10per & P3per_xx_times <= tile_90per ~ 1
+      P3per_all >= tile_10per & P3per_all <= tile_90per ~ 1
       ,TRUE ~ 0
     )
     ,within_50per = case_when(
-      P3per_all >= tile_25per & P3per_xx_times <= tile_75per ~ 1
+      P3per_all >= tile_25per & P3per_all <= tile_75per ~ 1
       ,TRUE ~ 0
     )
   ) %>%
   summarise(cnt_within_80 = sum(within_80per), cnt_within_50 = sum(within_50per))
 
 
+result %>%
+  mutate(
+    width_80per = tile_90per - tile_10per
+    ,width_50per = tile_75per - tile_25per
+  ) %>%
+  ggplot(aes(x = P3A_xx_times, y = width_80per))+
+  geom_point()
+
+
 # アテンプト数ごとの信頼区間の幅
-# 
+result %>%
+  mutate(
+    width_80per = tile_90per - tile_10per
+    ,width_50per = tile_75per - tile_25per
+  ) %>%
+  ggplot(aes(x = P3A_xx_times, y = width_50per))+
+  geom_point()
+ 
 
 # test code ---------------------------------------------------------------
 i <- 1
