@@ -3,17 +3,17 @@ library(tidyverse)
 library(bleaguer)
 
 
-# éå»ã®è©¦åˆã‚’è¡Œã£ãŸã‚¢ãƒªãƒ¼ãƒŠã®åç§°ã‚’æŠ½å‡º
+# ‰ß‹‚Ì‡‚ğs‚Á‚½ƒAƒŠ[ƒi‚Ì–¼Ì‚ğ’Šo
 arena <- b.games %>%
   distinct(Arena)%>%
-  mutate(Arena = as.character(Arena)) # factorå‹ã ã¨å¾ŒãŒé¢å€’ã«æ€ãˆãŸã®ã§ã€‚ã„ã‚‰ãªã„å‡¦ç†ã‹ã‚‚ã€‚
+  mutate(Arena = as.character(Arena)) # factorŒ^‚¾‚ÆŒã‚ª–Ê“|‚Év‚¦‚½‚Ì‚ÅB‚¢‚ç‚È‚¢ˆ—‚©‚àB
 
 
-# Google Map APIã®ãƒãƒƒã‚·ãƒ¥å€¤èª­ã¿è¾¼ã‚€
-register_google(key = "hoge") # å®Ÿè¡Œæ™‚ã¯ãƒãƒƒã‚·ãƒ¥å€¤å…¥åŠ›
+# Google Map API‚ÌƒnƒbƒVƒ…’l“Ç‚İ‚Ş
+register_google(key = "hoge") # Às‚ÍƒnƒbƒVƒ…’l“ü—Í
 
 
-# ã‚¢ãƒªãƒ¼ãƒŠã”ã¨ã®ç·¯åº¦ã¨çµŒåº¦ã‚’å–å¾—
+# ƒAƒŠ[ƒi‚²‚Æ‚ÌˆÜ“x‚ÆŒo“x‚ğæ“¾
 
 arena_locate <- arena %>%
   mutate(
@@ -23,25 +23,25 @@ arena_locate <- arena %>%
 
 for (i in 1:nrow(arena)) {
   t <- geocode(as.character(arena_locate[i, 1]) , output = "all")
-  t_lat <- t$results[[1]]$geometry$viewport$northeast$lat # ç·¯åº¦ã€‚åŒ—ç·¯ã¨å—ç·¯ã§è¡¨ã—æ–¹é•ã†ã‹ã‚‚
-  t_lng <- t$results[[1]]$geometry$viewport$northeast$lng # çµŒåº¦
-  arena_locate[i, 2] <- if_else(is.null(t_lat), 0, t_lat) # 0ã®ã‚„ã¤ã¯ãƒ‡ãƒ¼ã‚¿å–ã‚Œãªã‹ã£ãŸã‚„ã¤
-  arena_locate[i, 3] <- if_else(is.null(t_lng), 0, t_lng) # 0ã®ã‚„ã¤ã¯ãƒ‡ãƒ¼ã‚¿å–ã‚Œãªã‹ã£ãŸã‚„ã¤
+  t_lat <- t$results[[1]]$geometry$viewport$northeast$lat # ˆÜ“xB–kˆÜ‚Æ“ìˆÜ‚Å•\‚µ•ûˆá‚¤‚©‚à
+  t_lng <- t$results[[1]]$geometry$viewport$northeast$lng # Œo“x
+  arena_locate[i, 2] <- if_else(is.null(t_lat), 0, t_lat) # 0‚Ì‚â‚Â‚Íƒf[ƒ^æ‚ê‚È‚©‚Á‚½‚â‚Â
+  arena_locate[i, 3] <- if_else(is.null(t_lng), 0, t_lng) # 0‚Ì‚â‚Â‚Íƒf[ƒ^æ‚ê‚È‚©‚Á‚½‚â‚Â
 }
 
-## ãƒ‡ãƒ¼ã‚¿å–ã‚Œãªã‹ã£ãŸã‚¢ãƒªãƒ¼ãƒŠå–å¾—
+## ƒf[ƒ^æ‚ê‚È‚©‚Á‚½ƒAƒŠ[ƒiæ“¾
 arena_locate %>%
   filter(lat == 0)
-# 1 æ¨ªæµœæ–‡åŒ–ä½“è‚²é¤¨           0     0 35.4407307,139.6341344 https://www.google.co.jp/maps/place/%E6%97%A7%E6%A8%AA%E6%B5%9C%E6%96%87%E5%8C%96%E4%BD%93%E8%82%B2%E9%A4%A8%E8%B7%A1/@35.4407307,139.6341344,17z/data=!4m10!1m2!2m1!1z5qiq5rWc5paH5YyW5L2T6IKy6aSo!3m6!1s0x60185df0c1886967:0x7a3e38fface47d6a!8m2!3d35.4413437!4d139.6364986!15sChXmqKrmtZzmlofljJbkvZPogrLppKiSARNoaXN0b3JpY2FsX2xhbmRtYXJr4AEA!16s%2Fg%2F11k4xxl3rm?hl=ja
-# 2 å½¦æ ¹å¸‚æ°‘ä½“è‚²ã‚»ãƒ³ã‚¿ãƒ¼     0     0 35.2468899,136.244827 https://www.google.com/maps/place/%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%83%89%E3%82%A2%E3%83%AA%E3%83%BC%E3%83%8AHIKONE(%E5%BD%A6%E6%A0%B9%E5%B8%82%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%84%E3%83%BB%E6%96%87%E5%8C%96%E4%BA%A4%E6%B5%81%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC)/@35.2468899,136.244827,15z/data=!4m5!3m4!1s0x0:0xd06e6f196d3cded9!8m2!3d35.2468899!4d136.244827
-# 3 DIADORAã‚¢ãƒªãƒ¼ãƒŠ          0     0 35.3579172,136.799501 https://www.google.com/maps/place/%E3%81%84%E3%81%A1%E3%81%84%E4%BF%A1%E9%87%91%E3%82%A2%E3%83%AA%E3%83%BC%E3%83%8A/@35.3579172,136.799501,15z/data=!4m5!3m4!1s0x0:0xf6f781d1392bbecb!8m2!3d35.3579172!4d136.799501
+# 1 ‰¡•l•¶‰»‘ÌˆçŠÙ           0     0 35.4407307,139.6341344 https://www.google.co.jp/maps/place/%E6%97%A7%E6%A8%AA%E6%B5%9C%E6%96%87%E5%8C%96%E4%BD%93%E8%82%B2%E9%A4%A8%E8%B7%A1/@35.4407307,139.6341344,17z/data=!4m10!1m2!2m1!1z5qiq5rWc5paH5YyW5L2T6IKy6aSo!3m6!1s0x60185df0c1886967:0x7a3e38fface47d6a!8m2!3d35.4413437!4d139.6364986!15sChXmqKrmtZzmlofljJbkvZPogrLppKiSARNoaXN0b3JpY2FsX2xhbmRtYXJr4AEA!16s%2Fg%2F11k4xxl3rm?hl=ja
+# 2 •Fªs–¯‘ÌˆçƒZƒ“ƒ^[     0     0 35.2468899,136.244827 https://www.google.com/maps/place/%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%83%89%E3%82%A2%E3%83%AA%E3%83%BC%E3%83%8AHIKONE(%E5%BD%A6%E6%A0%B9%E5%B8%82%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%84%E3%83%BB%E6%96%87%E5%8C%96%E4%BA%A4%E6%B5%81%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC)/@35.2468899,136.244827,15z/data=!4m5!3m4!1s0x0:0xd06e6f196d3cded9!8m2!3d35.2468899!4d136.244827
+# 3 DIADORAƒAƒŠ[ƒi          0     0 35.3579172,136.799501 https://www.google.com/maps/place/%E3%81%84%E3%81%A1%E3%81%84%E4%BF%A1%E9%87%91%E3%82%A2%E3%83%AA%E3%83%BC%E3%83%8A/@35.3579172,136.799501,15z/data=!4m5!3m4!1s0x0:0xf6f781d1392bbecb!8m2!3d35.3579172!4d136.799501
 
 arena_locate_final <- arena_locate
-arena_locate_final[arena_locate_final$Arena == "æ¨ªæµœæ–‡åŒ–ä½“è‚²é¤¨",2] <- 35.4407307
-arena_locate_final[arena_locate_final$Arena == "æ¨ªæµœæ–‡åŒ–ä½“è‚²é¤¨",3] <- 139.6341344
-arena_locate_final[arena_locate_final$Arena == "å½¦æ ¹å¸‚æ°‘ä½“è‚²ã‚»ãƒ³ã‚¿ãƒ¼",2] <- 35.2468899
-arena_locate_final[arena_locate_final$Arena == "å½¦æ ¹å¸‚æ°‘ä½“è‚²ã‚»ãƒ³ã‚¿ãƒ¼",3] <- 136.244827
-arena_locate_final[arena_locate_final$Arena == "DIADORAã‚¢ãƒªãƒ¼ãƒŠ",2] <- 35.3579172
-arena_locate_final[arena_locate_final$Arena == "DIADORAã‚¢ãƒªãƒ¼ãƒŠ",3] <- 136.799501
+arena_locate_final[arena_locate_final$Arena == "‰¡•l•¶‰»‘ÌˆçŠÙ",2] <- 35.4407307
+arena_locate_final[arena_locate_final$Arena == "‰¡•l•¶‰»‘ÌˆçŠÙ",3] <- 139.6341344
+arena_locate_final[arena_locate_final$Arena == "•Fªs–¯‘ÌˆçƒZƒ“ƒ^[",2] <- 35.2468899
+arena_locate_final[arena_locate_final$Arena == "•Fªs–¯‘ÌˆçƒZƒ“ƒ^[",3] <- 136.244827
+arena_locate_final[arena_locate_final$Arena == "DIADORAƒAƒŠ[ƒi",2] <- 35.3579172
+arena_locate_final[arena_locate_final$Arena == "DIADORAƒAƒŠ[ƒi",3] <- 136.799501
 
 write.csv(arena_locate_final, "./01_data/arena_location.csv")
