@@ -5,13 +5,11 @@ library(ggmap)
 library(geosphere)
 library(tidyverse)
 library(bleaguer)
-options(digits = 10)
 
 us <- c(left = -125, bottom = 25.75, right = -67, top = 49)
 get_stamenmap(us, zoom = 5, maptype = "toner-lite") %>% ggmap() 
 
 
-# register_google(key = "AIzaSyDhkj88Yz1B6Gd_08NqplHaBe0zl4-xzyQ") # Github上げる時の羽残さないようにする
 
 map <- get_googlemap("waco texas", zoom = 12)
 ggmap(map)
