@@ -55,29 +55,59 @@ streaks_df <- df %>%
     streaks = n()
     ,.groups = "drop" # 100%棒グラフでfactorの順番を連勝数の大小と同じにするための処理。これがないとgroup内での順番が優先されてそう
   ) %>%
+  group_by(Season, NameShort, League, win_flag, streaks) %>%
+  summarise(
+    streaks_cnt = n()
+  ) %>%
+  mutate(
+    game_cnt_in_streaks = streaks * streaks_cnt
+    ,streaks = if_else(streaks >= 10, "over_10", as.character(streaks)) # 10連勝は一旦10の枠に収める
+  ) %>%
   arrange(streaks) %>% # 100%棒グラフでfactorの順番を連勝数の大小と同じにするための処理
   mutate(streaks = as.factor(streaks)) %>%
   group_by(Season, NameShort, League, win_flag, streaks) %>%
   summarise(
-    cnt = n()
+    game_cnt_in_streaks = sum(game_cnt_in_streaks)
   )
+  
 
 streaks_df %>%
   filter(League == "B1", win_flag == 1) %>%
-  ggplot(aes(x = Season, y = cnt, fill = streaks))+
+  ggplot(aes(x = Season, y = game_cnt_in_streaks, fill = streaks))+
   geom_bar(stat = "identity", position = "fill")+
   scale_y_continuous(labels = percent)+
   scale_fill_grey(start = 0.2, end = 0.8)+
   labs(x = "シーズン", y = "連勝数の構成比", title = "B1での連勝数の構成比")+
-  theme_bw()
+  theme_bw()+
+  ggsave("./02_output/wins_streaks_B1.png")
   
 streaks_df %>%
   filter(League == "B1", win_flag == 0) %>%
-  ggplot(aes(x = Season, y = cnt, fill = streaks))+
+  ggplot(aes(x = Season, y = game_cnt_in_streaks, fill = streaks))+
   geom_bar(stat = "identity", position = "fill")+
   scale_y_continuous(labels = percent)+
   scale_fill_grey(start = 0.2, end = 0.8)+
   labs(x = "シーズン", y = "連敗数の構成比", title = "B1での連敗数の構成比")+
-  theme_bw()
+  theme_bw()+
+  ggsave("./02_output/loses_streaks_B1.png")
 
-X連勝 / 連敗に含まれる試合数の構成比のほうがいいかも
+
+streaks_df %>%
+  filter(League == "B2", win_flag == 1) %>%
+  ggplot(aes(x = Season, y = game_cnt_in_streaks, fill = streaks))+
+  geom_bar(stat = "identity", position = "fill")+
+  scale_y_continuous(labels = percent)+
+  scale_fill_grey(start = 0.2, end = 0.8)+
+  labs(x = "シーズン", y = "連勝数の構成比", title = "B2での連勝数の構成比")+
+  theme_bw()+
+  ggsave("./02_output/wins_streaks_B2.png")
+
+streaks_df %>%
+  filter(League == "B2", win_flag == 0) %>%
+  ggplot(aes(x = Season, y = game_cnt_in_streaks, fill = streaks))+
+  geom_bar(stat = "identity", position = "fill")+
+  scale_y_continuous(labels = percent)+
+  scale_fill_grey(start = 0.2, end = 0.8)+
+  labs(x = "シーズン", y = "連敗数の構成比", title = "B2での連敗数の構成比")+
+  theme_bw()+
+  ggsave("./02_output/loses_streaks_B2.png")
