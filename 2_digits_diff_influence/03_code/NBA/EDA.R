@@ -41,9 +41,9 @@ df_result_2q <- df %>%
 
 # Check the transition of result by each points difference ----------------
 
-df_result_2q %>%
+p <- df_result_2q %>%
   mutate(win_flag = if_else(pts_diff_last > 0, 1, 0)) %>%
-  mutate(pts_diff_2q = if_else(pts_diff_2q < -25, -25, pts_diff_2q)) %>%
+  mutate(pts_diff_2q = if_else(pts_diff_2q < -25, as.integer(-25), pts_diff_2q)) %>%
   group_by(pts_diff_2q) %>%
   summarise(
     game_cnt = n()
@@ -55,8 +55,8 @@ df_result_2q %>%
   geom_line()+
   scale_x_continuous(breaks = seq(0, 25, by = 5))+
   scale_y_continuous(labels = percent, breaks = seq(0, 0.6, length = 7), limits = c(0, 0.6))+
-  geom_line(size = 0.5)+
-  geom_point(size = 1)+
+  geom_line(linewidth = 1)+
+  geom_point(size = 2)+
   #geom_text_repel(aes(label = game_cnt), size = 3)+
   labs(
     x = "Each behind points at halftime"
@@ -67,7 +67,7 @@ df_result_2q %>%
   )+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
-
+ggsave(plot = p, file = "./02_output/02_img/NBA/halftime.png")
 
 
 # 3Q ----------------------------------------------------------------------
@@ -96,9 +96,9 @@ df_result_3q <- df %>%
 
 # Check the transition of result by each points difference ----------------
 
-df_result_3q %>%
+p <- df_result_3q %>%
   mutate(win_flag = if_else(pts_diff_last > 0, 1, 0)) %>%
-  mutate(pts_diff_3q = if_else(pts_diff_3q < -25, -25, pts_diff_3q)) %>%
+  mutate(pts_diff_3q = if_else(pts_diff_3q < -25, as.integer(-25), pts_diff_3q)) %>%
   group_by(pts_diff_3q) %>%
   summarise(
     game_cnt = n()
@@ -110,8 +110,8 @@ df_result_3q %>%
   geom_line()+
   scale_x_continuous(breaks = seq(0, 25, by = 5))+
   scale_y_continuous(labels = percent, breaks = seq(0, 0.6, length = 7), limits = c(0, 0.6))+
-  geom_line(size = 0.5)+
-  geom_point(size = 1)+
+  geom_line(linewidth = 1)+
+  geom_point(size = 2)+
   #geom_text_repel(aes(label = game_cnt), size = 3)+
   labs(
     x = "Each behind points at the end of 3Q"
@@ -122,3 +122,4 @@ df_result_3q %>%
   )+
   theme_bw()+
   theme(panel.grid.minor = element_blank())
+ggsave(plot = p, file = "./02_output/02_img/NBA/3Q.png")

@@ -6,7 +6,7 @@ pacman::p_load(tidyverse, scales, broom)
 
 df <- readRDS("./01_data/quarter_log.rds") 
 df <- df %>%
-  mutate(pts_diff = hs - vs)
+  mutate(pts_diff = as.double(hs - vs))
 
 # 2Q ----------------------------------------------------------------------
 period_param <- 2
