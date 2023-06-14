@@ -69,6 +69,33 @@ p <- df_result_2q %>%
   theme(panel.grid.minor = element_blank())
 ggsave(plot = p, file = "./02_output/02_img/NBA/halftime.png")
 
+p <- df_result_2q %>%
+  mutate(win_flag = if_else(pts_diff_last > 0, 1, 0)) %>%
+  mutate(pts_diff_2q = if_else(pts_diff_2q < -25, as.integer(-25), pts_diff_2q)) %>%
+  group_by(pts_diff_2q) %>%
+  summarise(
+    game_cnt = n()
+    ,win_cnt = sum(win_flag)
+  ) %>%
+  mutate(win_ratio = win_cnt / game_cnt) %>%
+  mutate(win_ratio = if_else(pts_diff_2q == 0, 0.5, win_ratio)) %>% # special process
+  ggplot(aes(x = -pts_diff_2q, y = win_ratio))+
+  geom_line()+
+  scale_x_continuous(breaks = seq(0, 25, by = 5))+
+  scale_y_continuous(labels = percent, breaks = seq(0, 0.6, length = 7), limits = c(0, 0.6))+
+  geom_line(linewidth = 1)+
+  geom_point(size = 2)+
+  geom_text_repel(aes(label = game_cnt), size = 3)+
+  labs(
+    x = "Each behind points at halftime"
+    , y = "Win%"
+    , title = "Winning percentage of each behind points at halftime"
+    , subtitle = "4800 games of 4 seasons data(2020-2023) in NBA"
+    , caption = "over 25 points behind games are aggregated 25 points."
+  )+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+ggsave(plot = p, file = "./02_output/02_img/NBA/halftime_game_cnt.png")
 
 # 3Q ----------------------------------------------------------------------
 
@@ -123,3 +150,31 @@ p <- df_result_3q %>%
   theme_bw()+
   theme(panel.grid.minor = element_blank())
 ggsave(plot = p, file = "./02_output/02_img/NBA/3Q.png")
+
+p <- df_result_3q %>%
+  mutate(win_flag = if_else(pts_diff_last > 0, 1, 0)) %>%
+  mutate(pts_diff_3q = if_else(pts_diff_3q < -25, as.integer(-25), pts_diff_3q)) %>%
+  group_by(pts_diff_3q) %>%
+  summarise(
+    game_cnt = n()
+    ,win_cnt = sum(win_flag)
+  ) %>%
+  mutate(win_ratio = win_cnt / game_cnt) %>%
+  mutate(win_ratio = if_else(pts_diff_3q == 0, 0.5, win_ratio)) %>% # special process
+  ggplot(aes(x = -pts_diff_3q, y = win_ratio))+
+  geom_line()+
+  scale_x_continuous(breaks = seq(0, 25, by = 5))+
+  scale_y_continuous(labels = percent, breaks = seq(0, 0.6, length = 7), limits = c(0, 0.6))+
+  geom_line(linewidth = 1)+
+  geom_point(size = 2)+
+  geom_text_repel(aes(label = game_cnt), size = 3)+
+  labs(
+    x = "Each behind points at the end of 3Q"
+    , y = "Win%"
+    , title = "Winning percentage of each behind points at the end of 3Q"
+    , subtitle = "4800 games of 4 seasons data(2020-2023) in NBA"
+    , caption = "over 25 points behind games are aggregated 25 points."
+  )+
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())
+ggsave(plot = p, file = "./02_output/02_img/NBA/3Q_game_cnt.png")
